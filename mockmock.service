@@ -1,0 +1,10 @@
+[Unit]
+Description=MockMock service
+Requires=network.target
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /opt/MockMock.jar -p 25 -h 80
+
+[Install]
+WantedBy=multi-user.target
