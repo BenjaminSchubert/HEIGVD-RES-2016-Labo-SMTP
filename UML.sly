@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
+<classDiagram>
+  <diagramElements name="RES - SMTP">
+    <association aggregation="NONE" direction="BIDIRECTIONAL" id="3027" name="generates &gt;">
+      <role componentId="3026" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="3025" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>0</min>
+          <max>2147483647</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="CLASS" id="3026" isAbstract="false" name="SpamGroupGenerator" visibility="PUBLIC">
+      <method isAbstract="false" isStatic="true" name="generate" returnType="SpamGroup" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="3025" isAbstract="false" name="SpamGroup" visibility="PUBLIC"/>
+    <inheritance id="3024">
+      <child>3023</child>
+      <parent>3022</parent>
+    </inheritance>
+    <entity entityType="CLASS" id="3023" isAbstract="false" name="FileAddressEmailParser" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="3022" isAbstract="false" name="BaseAddressEmailParser" visibility="PUBLIC"/>
+    <inheritance id="3021">
+      <child>3020</child>
+      <parent>3019</parent>
+    </inheritance>
+    <entity entityType="CLASS" id="3020" isAbstract="false" name="XMLEmailMessageParser" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="3019" isAbstract="false" name="BaseEmailMessageParser" visibility="PUBLIC"/>
+  </diagramElements>
+  <umlView grid="10" name="view no name">
+    <relationView color="-12566464" relationId="3021">
+      <line>
+        <point>
+          <x>691</x>
+          <y>391</y>
+        </point>
+        <point>
+          <x>691</x>
+          <y>336</y>
+        </point>
+      </line>
+    </relationView>
+    <relationView color="-12566464" relationId="3024">
+      <line>
+        <point>
+          <x>1001</x>
+          <y>391</y>
+        </point>
+        <point>
+          <x>1001</x>
+          <y>336</y>
+        </point>
+      </line>
+    </relationView>
+    <relationView color="-12566464" relationId="3027">
+      <line>
+        <point>
+          <x>351</x>
+          <y>191</y>
+        </point>
+        <point>
+          <x>591</x>
+          <y>191</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>441</x>
+        <y>164</y>
+        <w>75</w>
+        <h>17</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>355</x>
+        <y>195</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>585</x>
+        <y>195</y>
+        <w>0</w>
+        <h>17</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>355</x>
+        <y>168</y>
+        <w>8</w>
+        <h>17</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>564</x>
+        <y>168</y>
+        <w>21</w>
+        <h>17</h>
+      </multipliciteAssociation>
+    </relationView>
+    <componentView color="-2079" componentID="3019" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>590</x>
+        <y>280</y>
+        <w>200</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="3020" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>590</x>
+        <y>390</y>
+        <w>200</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="3022" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>900</x>
+        <y>280</y>
+        <w>200</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="3023" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>900</x>
+        <y>390</y>
+        <w>200</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="3025" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>590</x>
+        <y>170</y>
+        <w>150</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="3026" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>160</x>
+        <y>160</y>
+        <w>190</w>
+        <h>70</h>
+      </geometry>
+    </componentView>
+  </umlView>
+</classDiagram>
