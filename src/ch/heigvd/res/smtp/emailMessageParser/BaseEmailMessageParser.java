@@ -1,7 +1,13 @@
 package ch.heigvd.res.smtp.emailMessageParser;
 
+import ch.heigvd.res.smtp.Email;
+
+import java.util.ArrayList;
+
 /**
- * Created by Benjamin Schubert on 4/6/16.
+ * @author Benjamin Schubert and Basile Vu
  */
-public class BaseEmailMessageParser {
+public abstract class BaseEmailMessageParser {
+    public abstract ArrayList<Email> parse();
 }
+

@@ -1,8 +1,27 @@
 package ch.heigvd.res.smtp.groups;
 
+import java.util.ArrayList;
+
 /**
- * Created by Benjamin Schubert on 4/6/16.
+ * @author Benjamin Schubert and Basile Vu
  */
 public class SpamGroup {
-    SpamGroup(String sender, String... recipients) {}
+    private String sender;
+    private ArrayList<String> recipients = new ArrayList<>();
+
+    public String getSender() {
+        return sender;
+    }
+
+    public ArrayList<String> getRecipients() {
+        return recipients;
+    }
+
+    public void addUser(String o) {
+        if(null == sender) {
+            sender = o;
+        } else {
+            recipients.add(o);
+        }
+    }
 }
