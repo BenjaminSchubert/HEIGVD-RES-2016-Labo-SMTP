@@ -15,15 +15,30 @@ public class EmailSender {
     public static void sendEmailCampaign(String host, int port, SpamGroup[] groups, ArrayList<Email> emails) {
         try(SMTPClient mailClient =
                     SMTPClientFactory.createSMTPClient(host, port, SMTPClientFactory.ApplicationLayerProtocol.PLAIN)) {
-            Random random = new Random();
-
-            for(SpamGroup group: groups) {
-                mailClient.sendEmail(group, emails.get(random.nextInt(emails.size())));
-            }
+            sendEmails(mailClient, groups, emails);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
+        }
+    }
+
+    public static void sendEmailCampaign(
+            String host, int port, SpamGroup[] groups, ArrayList<Email> emails, String username, String password) {
+        try(SMTPClient mailClient =
+                    SMTPClientFactory.createSMTPClient(
+                            host, port, SMTPClientFactory.ApplicationLayerProtocol.PLAIN, username, password)) {
+            sendEmails(mailClient, groups, emails);
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    private static void sendEmails(SMTPClient mailClient, SpamGroup[] groups, ArrayList<Email> emails)
+            throws IOException {
+        Random random = new Random();
+
+        for(SpamGroup group: groups) {
+            mailClient.sendEmail(group, emails.get(random.nextInt(emails.size())));
         }
     }
 }

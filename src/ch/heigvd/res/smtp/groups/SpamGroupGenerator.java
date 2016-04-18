@@ -2,6 +2,7 @@ package ch.heigvd.res.smtp.groups;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * @author Benjamin Schubert and Basile Vu
@@ -29,6 +30,7 @@ public class SpamGroupGenerator {
             throw new RuntimeException("Too much groups. Can't put 3 people in each");
         }
 
+        Collections.shuffle(usernames);
         for(int i =0; i < spamgroups.length; i++) {
             spamgroups[i] = new SpamGroup();
         }

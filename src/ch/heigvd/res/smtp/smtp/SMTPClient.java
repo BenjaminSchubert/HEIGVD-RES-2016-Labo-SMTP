@@ -8,14 +8,14 @@ import java.io.*;
 /**
  * @author Benjamin Schubert and Basile Vu
  */
-public class SMTPClient implements AutoCloseable {
-    private final BufferedReader input;
-    private final BufferedWriter output;
+public class SMTPClient implements Closeable {
+    protected final BufferedReader input;
+    protected final BufferedWriter output;
+    private boolean authenticated = false;
 
     SMTPClient(BufferedReader input, BufferedWriter output) throws IOException {
         this.input = input;
         this.output = output;
-        authenticate();
     }
 
     public void authenticate() throws IOException {
@@ -24,15 +24,16 @@ public class SMTPClient implements AutoCloseable {
         output.flush();
 
         // comsume input we don't care about
-        System.out.println(input.readLine());
-        System.out.println(input.readLine());
-        check_data("Ok", "Didn't receive message saying I can start sending email");
+        String in;
+        while((in = input.readLine()).startsWith("250-")) {}
+        if(!in.startsWith("250")) {
+            throw new IOException(String.format("authentication not successful. Got %s", in));
+        }
     }
 
-    private void check_data(String s, String message) throws IOException {
+    protected void check_data(String s, String message) throws IOException {
         String data = input.readLine();
-        System.out.println(data);
-        if(!data.contains(s)) {
+        if(!data.toLowerCase().contains(s.toLowerCase())) {
             throw new IOException(message + ": Received " + data);
         }
     }
@@ -44,16 +45,18 @@ public class SMTPClient implements AutoCloseable {
         }
         output.flush();
 
-        check_data("Ok", "Couldn't validate sender");
+        check_data("250", "Couldn't validate sender");
 
         for(String ignored : group.getRecipients()) {
-            check_data("Ok", "Couldn't validate receiver");
+            check_data("250", "Couldn't validate receiver");
         }
-
     }
 
     private void sendBody(SpamGroup group, Email email) throws IOException {
         output.write("DATA\r\n");
+        output.flush();
+        check_data("354", "Didn't get authorization to send email");
+
         output.write(String.format("From: %s\r\n", group.getSender()));
 
         String users = "";
@@ -66,18 +69,20 @@ public class SMTPClient implements AutoCloseable {
         output.write("\r\n.\r\n");
         output.flush();
 
-        // consume unused data
-        System.out.println(input.readLine());
-        check_data("Ok", "Couldn't send mail body");
+        check_data("250", "Couldn't send mail body");
     }
 
     public void sendEmail(SpamGroup group, Email email) throws IOException {
+        if(!authenticated) {
+            authenticate();
+            authenticated = true;
+        }
         sendHeader(group);
         sendBody(group, email);
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         output.write("quit\r\n");
         output.flush();
         input.readLine();
