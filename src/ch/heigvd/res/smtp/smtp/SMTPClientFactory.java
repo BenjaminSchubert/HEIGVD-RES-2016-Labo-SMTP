@@ -1,5 +1,6 @@
 package ch.heigvd.res.smtp.smtp;
 
+import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.Socket;
 
@@ -7,7 +8,7 @@ import java.net.Socket;
  * @author Benjamin Schubert and Basile Vu
  */
 public class SMTPClientFactory {
-    public enum ApplicationLayerProtocol { PLAIN }
+    public enum ApplicationLayerProtocol { PLAIN, SSL }
 
     public static SMTPClient createSMTPClient(String host, int port, ApplicationLayerProtocol protocol)
             throws IOException {
@@ -36,6 +37,10 @@ public class SMTPClientFactory {
         Socket socket;
 
         switch (protocol) {
+            case SSL:
+                SSLSocketFactory factory=(SSLSocketFactory) SSLSocketFactory.getDefault();
+                socket = factory.createSocket(host, port);
+                break;
             case PLAIN:
             default:
                 socket = new Socket(host, port);

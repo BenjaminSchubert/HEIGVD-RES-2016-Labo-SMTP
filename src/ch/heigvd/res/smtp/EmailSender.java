@@ -12,9 +12,10 @@ import java.util.Random;
  * @author Benjamin Schubert and Basile Vu
  */
 public class EmailSender {
-    public static void sendEmailCampaign(String host, int port, SpamGroup[] groups, ArrayList<Email> emails) {
+    public static void sendEmailCampaign(String host, int port, SpamGroup[] groups, ArrayList<Email> emails,
+                                         SMTPClientFactory.ApplicationLayerProtocol protocol) {
         try(SMTPClient mailClient =
-                    SMTPClientFactory.createSMTPClient(host, port, SMTPClientFactory.ApplicationLayerProtocol.PLAIN)) {
+                    SMTPClientFactory.createSMTPClient(host, port, protocol)) {
             sendEmails(mailClient, groups, emails);
         } catch (IOException e) {
             e.printStackTrace();
@@ -22,10 +23,11 @@ public class EmailSender {
     }
 
     public static void sendEmailCampaign(
-            String host, int port, SpamGroup[] groups, ArrayList<Email> emails, String username, String password) {
+            String host, int port, SpamGroup[] groups, ArrayList<Email> emails, String username, String password,
+            SMTPClientFactory.ApplicationLayerProtocol protocol) {
         try(SMTPClient mailClient =
                     SMTPClientFactory.createSMTPClient(
-                            host, port, SMTPClientFactory.ApplicationLayerProtocol.PLAIN, username, password)) {
+                            host, port, protocol, username, password)) {
             sendEmails(mailClient, groups, emails);
         } catch (IOException e) {
             e.printStackTrace();
