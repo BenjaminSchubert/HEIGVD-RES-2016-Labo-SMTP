@@ -7,10 +7,10 @@ import java.util.ArrayList;
 /**
  * @author Benjamin Schubert and Basile Vu
  */
-public class EmailMessageParserFactory {
+public class EmailListFactory {
     public static ArrayList<Email> getEmails(String file) {
         if(file.endsWith(".email")) {
-            return new CustomEmailParser(file).parse();
+            return new DefaultEmailParser(file).parse();
         } else {
             throw new RuntimeException("Unkown file extension");
         }

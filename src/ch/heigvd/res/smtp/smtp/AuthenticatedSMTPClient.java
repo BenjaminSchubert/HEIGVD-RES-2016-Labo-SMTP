@@ -22,7 +22,7 @@ public class AuthenticatedSMTPClient extends SMTPClient {
     }
 
     public void authenticate() throws IOException {
-        check_data("220", "Likely not a SMTP Server");
+        checkData("220", "Likely not a SMTP Server");
         output.write("EHLO anonymous.com\r\n");
         output.flush();
 
@@ -36,19 +36,19 @@ public class AuthenticatedSMTPClient extends SMTPClient {
 
             System.exit(5);
         }
-        check_data("250", "didn't get size");
+        checkData("250", "didn't get size");
 
         output.write("AUTH LOGIN\r\n");
         output.flush();
 
-        check_data("334", "didn't get asked for username");
+        checkData("334", "didn't get asked for username");
         output.write(username + "\r\n");
         output.flush();
 
-        check_data("334", "didn't get asked for password");
+        checkData("334", "didn't get asked for password");
         output.write(password + "\r\n");
         output.flush();
 
-        check_data("235", "Couldn't authenticate");
+        checkData("235", "Couldn't authenticate");
     }
 }

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 /**
  * @author Benjamin Schubert and Basile Vu
  */
-public class CustomEmailParser extends BaseEmailMessageParser {
+public class DefaultEmailParser extends BaseEmailParser {
     private String file;
 
-    public CustomEmailParser(String file) {
+    public DefaultEmailParser(String file) {
         this.file = file;
     }
 

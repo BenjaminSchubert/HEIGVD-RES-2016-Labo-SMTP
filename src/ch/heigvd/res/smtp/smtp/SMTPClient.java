@@ -19,7 +19,7 @@ public class SMTPClient implements Closeable {
     }
 
     public void authenticate() throws IOException {
-        check_data("220", "Likely not a SMTP Server");
+        checkData("220", "Likely not a SMTP Server");
         output.write("EHLO anonymous.com\r\n");
         output.flush();
 
@@ -31,7 +31,7 @@ public class SMTPClient implements Closeable {
         }
     }
 
-    protected void check_data(String s, String message) throws IOException {
+    protected void checkData(String s, String message) throws IOException {
         String data = input.readLine();
         if(!data.toLowerCase().contains(s.toLowerCase())) {
             throw new IOException(message + ": Received " + data);
@@ -45,17 +45,17 @@ public class SMTPClient implements Closeable {
         }
         output.flush();
 
-        check_data("250", "Couldn't validate sender");
+        checkData("250", "Couldn't validate sender");
 
         for(String ignored : group.getRecipients()) {
-            check_data("250", "Couldn't validate receiver");
+            checkData("250", "Couldn't validate receiver");
         }
     }
 
     private void sendBody(SpamGroup group, Email email) throws IOException {
         output.write("DATA\r\n");
         output.flush();
-        check_data("354", "Didn't get authorization to send email");
+        checkData("354", "Didn't get authorization to send email");
 
         output.write(String.format("From: %s\r\n", group.getSender()));
 
@@ -69,7 +69,7 @@ public class SMTPClient implements Closeable {
         output.write("\r\n.\r\n");
         output.flush();
 
-        check_data("250", "Couldn't send mail body");
+        checkData("250", "Couldn't send mail body");
     }
 
     public void sendEmail(SpamGroup group, Email email) throws IOException {

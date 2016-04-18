@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * @author Benjamin Schubert and Basile Vu
  */
-public abstract class BaseEmailMessageParser {
+public abstract class BaseEmailParser {
     public abstract ArrayList<Email> parse();
 }
 
