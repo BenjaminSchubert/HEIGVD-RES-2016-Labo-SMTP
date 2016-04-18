@@ -8,25 +8,17 @@ import java.io.*;
 /**
  * @author Benjamin Schubert and Basile Vu
  */
-public class SMTPClient {
+public class SMTPClient implements AutoCloseable {
     private final BufferedReader input;
     private final BufferedWriter output;
-    private boolean authenticated = false;
 
-    SMTPClient(BufferedReader input, BufferedWriter output) {
+    SMTPClient(BufferedReader input, BufferedWriter output) throws IOException {
         this.input = input;
         this.output = output;
+        authenticate();
     }
 
-    private void check_data(String s, String message) throws IOException {
-        String data = input.readLine();
-        System.out.println(data);
-        if(!data.contains(s)) {
-            throw new IOException(message + ": Received " + data);
-        }
-    }
-
-    private void check_hello() throws IOException {
+    public void authenticate() throws IOException {
         check_data("220", "Likely not a SMTP Server");
         output.write("EHLO anonymous.com\r\n");
         output.flush();
@@ -35,6 +27,14 @@ public class SMTPClient {
         System.out.println(input.readLine());
         System.out.println(input.readLine());
         check_data("Ok", "Didn't receive message saying I can start sending email");
+    }
+
+    private void check_data(String s, String message) throws IOException {
+        String data = input.readLine();
+        System.out.println(data);
+        if(!data.contains(s)) {
+            throw new IOException(message + ": Received " + data);
+        }
     }
 
     private void sendHeader(SpamGroup group) throws IOException {
@@ -72,11 +72,17 @@ public class SMTPClient {
     }
 
     public void sendEmail(SpamGroup group, Email email) throws IOException {
-        if(!authenticated) {
-            check_hello();
-            authenticated = true;
-        }
         sendHeader(group);
         sendBody(group, email);
+    }
+
+    @Override
+    public void close() throws Exception {
+        output.write("quit\r\n");
+        output.flush();
+        input.readLine();
+        input.readLine();
+        output.close();
+        input.close();
     }
 }
