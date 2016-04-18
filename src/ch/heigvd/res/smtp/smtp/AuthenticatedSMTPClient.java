@@ -49,6 +49,6 @@ public class AuthenticatedSMTPClient extends SMTPClient {
         output.write(password + "\r\n");
         output.flush();
 
-        check_data("235git", "Couldn't authenticate");
+        check_data("235", "Couldn't authenticate");
     }
 }
