@@ -49,7 +49,10 @@ public class DefaultEmailParser extends BaseEmailParser {
                     currentEmailHeader = null;
                 }
             }
-            emails.add(new Email(currentEmailSubject, currentEmailContent, currentEmailHeader));
+            if(currentEmailHeader != null || currentEmailSubject != null ||
+                    currentEmailContent.matches(".*[A-Za-z0-9].*")) {
+                emails.add(new Email(currentEmailSubject, currentEmailContent, currentEmailHeader));
+            }
         } catch (FileNotFoundException e) {
             System.err.println(String.format("Could not find email file %s", file));
             System.exit(4);
