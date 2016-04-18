@@ -64,7 +64,12 @@ public class SMTPClient implements Closeable {
             users += rcpt + ", ";
         }
         output.write(String.format("To: %s\r\n", users));
-        output.write(String.format("Subject: %s\r\n\r\n", email.subject));
+        if(email.subject != null) {
+            output.write(String.format("Subject: %s\r\n", email.subject));
+        }
+        if(email.header != null) {
+            output.write(email.header);
+        }
         output.write(email.content);
         output.write("\r\n.\r\n");
         output.flush();
