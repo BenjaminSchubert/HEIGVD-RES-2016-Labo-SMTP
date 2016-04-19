@@ -9,12 +9,19 @@ import java.util.ArrayList;
 
 /**
  * @author Benjamin Schubert and Basile Vu
+ *
+ * Main entry point for the Spam sender
  */
 public class ConsoleRunner {
     private final static String usage =
             "Usage : java ch.heigvd.res.smtp.ConsoleRunner host port email_addresses_file"
             + "groups email_list [username] [password] [--ssl]";
 
+    /**
+     * Setup and sends an email campaign
+     *
+     * @param args list of arguments as define in usage.
+     */
     public static void main(String... args) {
         if(args.length < 5 || args.length > 8) {
             System.err.println(usage);
