@@ -5,8 +5,6 @@ import ch.heigvd.res.smtp.Email;
 import java.io.*;
 import java.util.ArrayList;
 
-import static com.sun.org.apache.xml.internal.serialize.OutputFormat.Defaults.Encoding;
-
 /**
  * @author Benjamin Schubert and Basile Vu
  */
@@ -29,7 +27,7 @@ public class DefaultEmailParser extends BaseEmailParser {
             String currentEmailHeader = null;
             String currentEmailContent = "";
 
-            while ((line = in.readLine()) != null) {
+            while((line = in.readLine()) != null) {
                 if(line.matches(subject + ".*")) {
                     currentEmailSubject = line.replaceAll(subject, "");
                 }
@@ -40,9 +38,10 @@ public class DefaultEmailParser extends BaseEmailParser {
                         currentEmailHeader += "Content-Transfer-Encoding: 7bit";
                     }
                 }
-                else if (!line.startsWith("====")) {
+                else if(!line.startsWith("====")) {
                     currentEmailContent += "\n" + line;
-                } else {
+                }
+                else if(!line.startsWith("#")) {
                     emails.add(new Email(currentEmailSubject, currentEmailContent, currentEmailHeader));
                     currentEmailContent = "";
                     currentEmailSubject = null;
