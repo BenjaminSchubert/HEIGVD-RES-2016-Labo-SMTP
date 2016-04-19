@@ -25,17 +25,17 @@ Before anything, begin by downloading or cloning the sources.
 
 ### Mock server deployment (without vagrant)
 1. Download [mockmock](https://raw.githubusercontent.com/tweakers-dev/MockMock/master/release/MockMock.jar)
-2. Launch it : java -jar /opt/MockMock.jar -p ${PORT_SMTP} -h ${PORT_BROWSER} 
+2. Launch it : `$ java -jar /opt/MockMock.jar -p ${PORT_SMTP} -h ${PORT_BROWSER}`
 
 
 ### Quickstart
 1. Compile the sources :
 
-    $ javac -d out **/*.jar
+    `$ javac -d out **/*.jar`
     
 2. You can then run the program with the following :
     
-    $ cd out; java ch.heigvd.res.smtp.ConsoleRunner host port email_addresses_file number_of_groups email_list [username] [password] [--ssl]
+    `$ cd out; java ch.heigvd.res.smtp.ConsoleRunner host port email_addresses_file number_of_groups email_list [username] [password] [--ssl]`
 
     * host is the FQDN of your SMTP server, localhost with mockmock
     * port is the port on which the SMTP server is listening
