@@ -7,17 +7,31 @@ import java.io.*;
 
 /**
  * @author Benjamin Schubert and Basile Vu
+ *
+ * This class implements the basis for SMTP exchanges to send emails
  */
 public class SMTPClient implements Closeable {
     protected final BufferedReader input;
     protected final BufferedWriter output;
     private boolean authenticated = false;
 
+    /**
+     * Creates a new SMTPClient which connects through the given input and output.
+     * @param input: the input on which to read data
+     * @param output: the output on which to send data
+     * @throws IOException
+     */
     SMTPClient(BufferedReader input, BufferedWriter output) throws IOException {
         this.input = input;
         this.output = output;
     }
 
+    /**
+     *
+     * Authenticates the clients with the server
+     *
+     * @throws IOException
+     */
     public void authenticate() throws IOException {
         checkData("220", "Likely not a SMTP Server");
         output.write("EHLO anonymous.com\r\n");
@@ -25,12 +39,21 @@ public class SMTPClient implements Closeable {
 
         // comsume input we don't care about
         String in;
+        //noinspection StatementWithEmptyBody
         while((in = input.readLine()).startsWith("250-")) {}
+
         if(!in.startsWith("250")) {
             throw new IOException(String.format("authentication not successful. Got %s", in));
         }
     }
 
+    /**
+     * Helper function to check that the data received from the server is indeed correct
+     *
+     * @param s: string to search in the data received from the server
+     * @param message: message to join to the exeption in case of problem
+     * @throws IOException
+     */
     protected void checkData(String s, String message) throws IOException {
         String data = input.readLine();
         if(!data.toLowerCase().contains(s.toLowerCase())) {
@@ -38,6 +61,12 @@ public class SMTPClient implements Closeable {
         }
     }
 
+    /**
+     * sends the email header
+     *
+     * @param group: group representing the sender and recipients of the email
+     * @throws IOException
+     */
     private void sendHeader(SpamGroup group) throws IOException {
         output.write(String.format("MAIL FROM: %s\r\n", group.getSender()));
         for(String rcpt: group.getRecipients()) {
@@ -52,6 +81,13 @@ public class SMTPClient implements Closeable {
         }
     }
 
+    /**
+     * Sends the content of the mail
+     *
+     * @param group: group representing the sender and recipients of the mail
+     * @param email: email to send
+     * @throws IOException
+     */
     private void sendBody(SpamGroup group, Email email) throws IOException {
         output.write("DATA\r\n");
         output.flush();
@@ -77,6 +113,13 @@ public class SMTPClient implements Closeable {
         checkData("250", "Couldn't send mail body");
     }
 
+    /**
+     * Authenticates with the server if needed and send the email to the given group
+     *
+     * @param group: group to send the email to
+     * @param email: email to send
+     * @throws IOException
+     */
     public void sendEmail(SpamGroup group, Email email) throws IOException {
         if(!authenticated) {
             authenticate();
@@ -86,6 +129,11 @@ public class SMTPClient implements Closeable {
         sendBody(group, email);
     }
 
+    /**
+     * Says goodbye to the server and closes the streams
+     *
+     * @throws IOException
+     */
     @Override
     public void close() throws IOException {
         output.write("quit\r\n");
