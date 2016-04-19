@@ -6,9 +6,19 @@ import java.util.Collections;
 
 /**
  * @author Benjamin Schubert and Basile Vu
+ *
+ * Generator for groups
  */
 public class SpamGroupGenerator {
 
+    /**
+     * Given a file containing email addresses and a number of group to form, will return a list of groups
+     * choosen randomly
+     *
+     * @param file: file containing emails
+     * @param number: number of groups to form
+     * @return list of groups
+     */
     public static SpamGroup[] generate(String file, int number) {
         ArrayList<String> usernames = new ArrayList<>();
         SpamGroup[] spamgroups = new SpamGroup[number];

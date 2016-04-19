@@ -12,7 +12,8 @@ import java.util.ArrayList;
  */
 public class ConsoleRunner {
     private final static String usage =
-            "Usage : java ch.heigvd.res.smtp.ConsoleRunner host port email_addresses_file groups email_list [username] [password] [--ssl]";
+            "Usage : java ch.heigvd.res.smtp.ConsoleRunner host port email_addresses_file"
+            + "groups email_list [username] [password] [--ssl]";
 
     public static void main(String... args) {
         if(args.length < 5 || args.length > 8) {
