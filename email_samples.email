@@ -1,3 +1,15 @@
+# This is a example file to send spam campaigns !
+# Every line starting with "#" is a comment and will be ignored
+#
+# In every email you can define :
+#   type : the type of email. Expects "html" or "text". By default (if omitted) will be text
+#   subject : the subject of the email
+#
+# To separate a new email from others, you can put a separating "====". Any number of "=" sign
+# greater than 4 will be considered the end of the email
+#
+# All quotes here are from H.P. Lovecraft
+
 type: html
 Subject : We have cookies !
 

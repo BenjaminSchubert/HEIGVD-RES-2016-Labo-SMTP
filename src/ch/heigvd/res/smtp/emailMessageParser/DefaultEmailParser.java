@@ -38,7 +38,7 @@ public class DefaultEmailParser extends BaseEmailParser {
                         currentEmailHeader += "Content-Transfer-Encoding: 7bit";
                     }
                 }
-                else if(!line.startsWith("====")) {
+                else if(!line.trim().startsWith("====")) {
                     currentEmailContent += "\n" + line;
                 }
                 else if(!line.startsWith("#")) {
