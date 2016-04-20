@@ -47,6 +47,12 @@ Before anything, begin by downloading or cloning the sources.
 3. That's it, you just sent your forged e-mails.
 
 
+## SMTP protocol
+
+Here we pictured a simplified version of the SMTP protocol. Please note that the email headers are not shown in here as they are not mandatory and would have add a significant readability hit on the diagram
+
+![smtp_protocol](./figures/SMTPSequenceDiagram.svg)
+
 ## Design and implementation
 
 Our code design is shown by the following diagram :
