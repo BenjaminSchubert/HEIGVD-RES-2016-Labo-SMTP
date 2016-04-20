@@ -34,14 +34,14 @@ public class DefaultEmailParser extends BaseEmailParser {
                 else if(line.matches(header + ".*")) {
                     if(line.replaceAll(header, "").toLowerCase().trim().matches("html")) {
                         currentEmailHeader = "Mime-Version: 1.0\r\n";
-                        currentEmailHeader += "Content-Type: text/html; charset=\"UTF-8\"\r\n";
-                        currentEmailHeader += "Content-Transfer-Encoding: 7bit";
+                        currentEmailHeader += "Content-Type: text/html;\r\n";
                     }
                 }
+                else if(line.startsWith("#")) {}
                 else if(!line.trim().startsWith("====")) {
                     currentEmailContent += "\n" + line;
                 }
-                else if(!line.startsWith("#")) {
+                else {
                     emails.add(new Email(currentEmailSubject, currentEmailContent, currentEmailHeader));
                     currentEmailContent = "";
                     currentEmailSubject = null;

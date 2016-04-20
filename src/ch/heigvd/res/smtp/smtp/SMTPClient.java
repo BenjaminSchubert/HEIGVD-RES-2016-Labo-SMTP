@@ -105,6 +105,7 @@ public class SMTPClient implements Closeable {
         }
         if(email.header != null) {
             output.write(email.header);
+            output.write("\r\n");
         }
         output.write(email.content);
         output.write("\r\n.\r\n");
