@@ -51,8 +51,8 @@ public class SMTPClientFactory {
         Socket socket = getSocket(host, port, protocol);
 
         return new AuthenticatedSMTPClient(
-                new BufferedReader(new InputStreamReader(new BufferedInputStream(socket.getInputStream()))),
-                new BufferedWriter(new OutputStreamWriter(new BufferedOutputStream(socket.getOutputStream()))),
+                new BufferedReader(new InputStreamReader(socket.getInputStream())),
+                new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),
                 username,
                 password
         );
